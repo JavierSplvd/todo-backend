@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from entities.item import Item
 from usecases.get_item import get_item
 from usecases.get_list_items import get_list_items
@@ -11,7 +11,10 @@ items_router = APIRouter(prefix="/items", tags=["items"])
 
 @items_router.get("/{item_id}")
 async def get_item_route(item_id: str) -> Item | None:
-    return get_item(item_id)
+    item = get_item(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return item
 
 
 @items_router.get("/")
