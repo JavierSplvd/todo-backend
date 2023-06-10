@@ -19,13 +19,38 @@ class ItemRepository:
         query = "SELECT * FROM items WHERE id = %s;"
         cursor.execute(query, (item_id,))
         columns = [desc[0] for desc in cursor.description]
-        item = dict(zip(columns, cursor.fetchone()))
+        result = cursor.fetchone()
+        if result is None:
+            return
+        item = dict(zip(columns, result))
 
         cursor.close()
 
         print(item)
 
         return item
+
+    def delete_item(self, item_id: str):
+        cursor = conn.cursor()
+
+        query = "DELETE FROM items WHERE id = %s;"
+        cursor.execute(query, (item_id,))
+        conn.commit()
+
+        cursor.close()
+
+        return
+
+    def update_item(self, item_id: str, new_title: str):
+        cursor = conn.cursor()
+
+        query = "UPDATE items SET title = %s WHERE id = %s;"
+        cursor.execute(query, (new_title, item_id))
+        conn.commit()
+
+        cursor.close()
+
+        return
 
     def get_all_items(self):
         cursor = conn.cursor()
