@@ -1,16 +1,19 @@
 from fastapi import APIRouter
 from entities.item import Item
+from usecases.get_item import get_item
+from usecases.get_list_items import get_list_items
 
 items_router = APIRouter(prefix="/items", tags=["items"])
 
-@items_router.get("/{id}")
-async def getItem() -> Item:
-    return {"message": "Hello World"}
+
+@items_router.get("/{item_id}")
+async def getItem(item_id: str) -> Item | None:
+    return get_item(item_id)
 
 
 @items_router.get("/")
 async def getListItems() -> list[Item]:
-    return {"message": "Hello World"}
+    return get_list_items()
 
 
 @items_router.put("/")

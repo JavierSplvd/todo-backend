@@ -6,6 +6,6 @@ from pydantic import BaseModel
 
 class Item(BaseModel):
     id: str | None
-    name: str
+    title: str
     updated_at: datetime | None
     created_at: datetime | None
