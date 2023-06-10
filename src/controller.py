@@ -4,6 +4,7 @@ from usecases.get_item import get_item
 from usecases.get_list_items import get_list_items
 from usecases.update_item import update_item
 from usecases.delete_item import delete_item
+from usecases.create_item import create_item
 
 items_router = APIRouter(prefix="/items", tags=["items"])
 
@@ -21,6 +22,11 @@ async def get_items_route() -> list[Item]:
 @items_router.put("/")
 async def put_item_ruote(item: Item):
     return update_item(item.id, item.title)
+
+
+@items_router.post("/")
+async def post_item_ruote(item: Item):
+    return create_item(item.title)
 
 
 @items_router.delete("/{item_id}")

@@ -1,5 +1,6 @@
 import os
 from psycopg2 import connect
+from uuid import uuid4
 
 conn = connect(
     host=os.environ["DB_HOST"],
@@ -35,6 +36,20 @@ class ItemRepository:
 
         query = "DELETE FROM items WHERE id = %s;"
         cursor.execute(query, (item_id,))
+        conn.commit()
+
+        cursor.close()
+
+        return
+
+    def create_item(self, title: str):
+        cursor = conn.cursor()
+
+        query = "INSERT INTO items (id, title) VALUES (%s, %s);"
+        cursor.execute(
+            query,
+            (str(uuid4()), title),
+        )
         conn.commit()
 
         cursor.close()
