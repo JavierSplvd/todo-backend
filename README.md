@@ -12,16 +12,25 @@ I have used FastAPI with python.
 
 # How to run
 
+The docker-compose builds an image for the python backend using the Dockerfile and then creates a PostgreSQL database on the same network.
+
+```
+docker-compose up
+```
+
+If you want to just start the backend without the docker-compose just run:
+
 ```
 $Env:DB_HOST="localhost"
 $Env:DB_DATABASE="db"
 $Env:DB_USER="username"
 $Env:DB_PASSWORD="example"
 
-docker-compose up
-
 python -m uvicorn main:app
 ```
+
+You will need a database properly setup.
+
 # Things to improve
 
 1. Pagination for the GET items/items endpoint, something like getting 100 items per page. Getting the data with this kind of format:
