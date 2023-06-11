@@ -1,4 +1,19 @@
 services:
+  backend:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    environment:
+      DB_HOST: "db"
+      DB_DATABASE: "db"
+      DB_USER: "username"
+      DB_PASSWORD: "example"
+    ports:
+        - 8000:8000
+    networks:
+      - backend-network
+    depends_on:
+      - db
   db:
     image: postgres
     restart: always
@@ -10,3 +25,7 @@ services:
       POSTGRES_DB: db
     volumes:
       - ./db/1_init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend-network
+networks:
+  backend-network:

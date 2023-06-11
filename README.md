@@ -17,4 +17,21 @@ $Env:DB_HOST="localhost"
 $Env:DB_DATABASE="db"
 $Env:DB_USER="username"
 $Env:DB_PASSWORD="example"
+
+docker-compose up
+
+python -m uvicorn main:app
 ```
+# Things to improve
+
+1. Pagination for the GET items/items endpoint, something like getting 100 items per page. Getting the data with this kind of format:
+```
+{
+    "data": [...],
+    "page": 0,
+    "total": 1305,
+    "count": 100
+}
+```
+2. Integration testing, I think on two ways. The first one is to use mocks (unittest.mock?) so that the ItemRepository class instantiates a mock version and each of their methods return the values we want for each test. The second one is with docker compose and create a database at the start of the battery of tests, with each test clean up and reset the database state and at the end do a teardown of the docker container.
+3. The POST and PUT can return the entity modified instead of an empty body. This is not a standard on Rest APIs but I find it useful for the frontend developers.
