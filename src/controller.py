@@ -24,12 +24,12 @@ async def get_items_route() -> list[Item]:
 
 @items_router.put("/")
 async def put_item_ruote(item: Item):
-    return update_item(item.id, item.title)
+    return update_item(item.id, item.title, item.done)
 
 
 @items_router.post("/")
 async def post_item_ruote(item: Item):
-    return create_item(item.title)
+    return create_item(item.title, item.done)
 
 
 @items_router.delete("/{item_id}")

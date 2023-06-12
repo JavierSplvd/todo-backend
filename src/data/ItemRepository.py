@@ -42,13 +42,13 @@ class ItemRepository:
 
         return
 
-    def create_item(self, title: str):
+    def create_item(self, title: str, done: str):
         cursor = conn.cursor()
 
-        query = "INSERT INTO items (id, title) VALUES (%s, %s);"
+        query = "INSERT INTO items (id, title, done) VALUES (%s, %s, %s);"
         cursor.execute(
             query,
-            (str(uuid4()), title),
+            (str(uuid4()), title, done),
         )
         conn.commit()
 
@@ -56,11 +56,11 @@ class ItemRepository:
 
         return
 
-    def update_item(self, item_id: str, new_title: str):
+    def update_item(self, item_id: str, new_title: str, new_done_status: bool):
         cursor = conn.cursor()
 
-        query = "UPDATE items SET title = %s WHERE id = %s;"
-        cursor.execute(query, (new_title, item_id))
+        query = "UPDATE items SET title = %s, done = %s WHERE id = %s;"
+        cursor.execute(query, (new_title, new_done_status, item_id))
         conn.commit()
 
         cursor.close()

@@ -17,6 +17,7 @@ The docker-compose builds an image for the python backend using the Dockerfile a
 ```
 docker-compose up
 ```
+NOTE: the first time, as the DB takes more time, you would need to do that command twice :(
 
 If you want to just start the backend without the docker-compose just run:
 
