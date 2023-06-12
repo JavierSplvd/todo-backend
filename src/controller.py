@@ -18,8 +18,8 @@ async def get_item_route(item_id: str) -> Item | None:
 
 
 @items_router.get("/")
-async def get_items_route() -> list[Item]:
-    return get_list_items()
+async def get_items_route(title: str | None = None) -> list[Item]:
+    return get_list_items(title)
 
 
 @items_router.put("/")

@@ -67,11 +67,15 @@ class ItemRepository:
 
         return
 
-    def get_all_items(self):
+    def get_all_items(self, title: str | None):
         cursor = conn.cursor()
 
-        query = "SELECT * FROM items ORDER BY created_at;"
-        cursor.execute(query)
+        if title is None:
+            query = "SELECT * FROM items ORDER BY created_at;"
+            cursor.execute(query)
+        else:
+            query = "SELECT * FROM items WHERE title ILIKE %s ORDER BY created_at;"
+            cursor.execute(query, ("%" + title + "%",))
         columns = [desc[0] for desc in cursor.description]
         items = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
